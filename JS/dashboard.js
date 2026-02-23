@@ -12,16 +12,16 @@ function logout(){
 //open with food section > show/hide cart/food section
 let foodSelection = document.getElementById("foodSelection");
 let cartSelection = document.getElementById("cartSelection");   
-foodSelection.style.display = "block";
+foodSelection.style.display = "grid";
 cartSelection.style.display = "none";
 
 function showFoodSelection(){
-    foodSelection.style.display = "block";
+    foodSelection.style.display = "grid";
     cartSelection.style.display = "none";
 }
 function showCartSelection(){
     foodSelection.style.display = "none";
-    cartSelection.style.display = "block";
+    cartSelection.style.display = "grid";
 }
 
 
@@ -39,17 +39,19 @@ function displayFood(meals){
 meals.forEach(meal=> {
     // let price = the total of the digits of idMeal
     let id = meal.idMeal;
-    let digits = id.split("");
-        let price = digits.reduce((total, digit) => {
-            return total + Number(digit);
-        }, 0);
-    foodSelection.innerHTML +=`
-    <div>
-    <h3>${meal.strMeal}: $${price}.00</h3>
-    <img src='${meal.strMealThumb}' alt=${meal.strMeal} width='150'/><br/>
-    <input type="button" value="Add to Cart" onclick="addToCart(${id},'${meal.strMeal}',${price})"/>
-    </div>`
-})
+    let price = id.split("").reduce((total, digit) => total + Number(digit), 0);                
+    //below is menu items UI display
+        const card = document.createElement('div');
+        card.className = "bg-red-200 pt-2 pl-4 m-1 rounded-lg shadow-md";
+        card.innerHTML = `
+            <h3 class="text-lg font-semibold">${meal.strMeal}</h3>
+            <h3 class="text-sm text-gray-600 pb-1">Price $${price}.00</h3>
+            <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="pr-4 pb-2"/>
+            <input type="button" value="Add to Cart" onclick="addToCart(${id},'${meal.strMeal}',${price})"
+            id="button"/>
+        `;
+        foodSelection.appendChild(card);
+    });
 }
 
 let cart = [];  //empty array to store cart items
@@ -70,12 +72,13 @@ function updateCart(){
     cartItem.innerHTML = "";    //clear previous cart items before changeQuantity to updateCart
         cart.forEach(item => {
             cartItem.innerHTML += `
+            <div>
             <h4>${item.mealName}</h4>
             <p>$${item.price}.00</p>
             <p>Quantity: ${item.quantity}</p>
             <input type="button" value="+" onclick="changeQuantity(${item.id}, 1)"/>
             <input type="button" value="-" onclick="changeQuantity(${item.id}, -1)"/>
-            `;
+            </div>`;
         });
         displayCartTotal();
 }

@@ -4,29 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
         <nav>
-                <h1>Food Ordering App</h1>
+            <h1>Food Ordering App</h1>
                 <span id="userEmail"></span><br/>
                 <span id="cartCount"></span>
                 <div>
                     <input type="button" value="Menu" onclick="showFoodSelection()"/>
                     <input type="button" value="Cart" onclick="showCartSelection()"/>
+                    <input type="button" value="Checkout" onclick="checkout()"/>
                     <input type="button" value="Logout" onclick="logout()"/>
                 </div>
         </nav>
-        <section id="foodSelection">
-            <h2>Food Menu</h2>
-        </section>
-
-        <section id="cartSelection">
-            <h2>Cart</h2>
-            <div id="cartItem"></div>
-            <h3 id="cartTotal">Total:</h3>
-        </section>
-        <input type="button" value="Checkout" onclick="checkout()"/>
+                <section id="foodSelection" class="grid grid-cols-3 gap-2">
+                </section>
+                <section id="cartSelection">
+                    <h2>Cart</h2>
+                <div id="cartItem"></div>
+                <h3 id="cartTotal">Total:</h3>
+                </section>
 <script src="JS/dashboard.js"></script>
 </script>
 </body>
