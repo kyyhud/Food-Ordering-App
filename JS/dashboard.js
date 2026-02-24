@@ -55,7 +55,6 @@ meals.forEach(meal=> {
 }
 
 let cart = [];  //empty array to store cart items
-document.getElementById("cartCount").innerHTML = `Cart Items: ${cart.length}`; // display cart item count in dashboard page
 
 function addToCart(id,mealName,price){
     let item = cart.find(c=>c.id === id);   //check if item already exists in cart, if so increase quantity by 1
@@ -76,10 +75,11 @@ function updateCart(){
             <h4>${item.mealName}</h4>
             <p>$${item.price}.00</p>
             <p>Quantity: ${item.quantity}</p>
-            <input type="button" value="+" onclick="changeQuantity(${item.id}, 1)"/>
-            <input type="button" value="-" onclick="changeQuantity(${item.id}, -1)"/>
+            <input type="button" value="+" id="button" onclick="changeQuantity(${item.id}, 1)"/>
+            <input type="button" value="-" id="button" onclick="changeQuantity(${item.id}, -1)"/>
             </div>`;
         });
+        document.getElementById("cartCount").innerHTML = `${cart.reduce((total, item) => total + item.quantity, 0)}`;   // display cart item count in dashboard page
         displayCartTotal();
 }
 //change quantity of cart items
