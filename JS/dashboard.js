@@ -72,23 +72,32 @@ function addToCart(id,mealName,price){
 
 function updateCart(){
     let cartItem = document.getElementById("cartItem");
-    cartItem.innerHTML = "";    //clear previous cart items before changeQuantity to updateCart
-        cart.forEach(item => {
-            cartItem.innerHTML += `
-            <div class="bg-gray-100 rounded-lg shadow p-4 mb-4 mt-2 flex flex-col md:flex-row md:items-center md:justify-between">
+    cartItem.innerHTML = "";
+
+    let cardsHTML = "";
+    cart.forEach(item => {
+        cardsHTML += `
+        <div class="bg-white rounded-lg shadow p-4 mb-1 flex flex-col md:flex-row md:items-center md:justify-between">
             <div>
-            <h4 class="text-xl font-semibold ml-1">${item.mealName}</h4>
-            <p class="text-sm text-gray-600 ml-2">$${item.price}.00</p>
-            <p class="text-md ml-1"> Quantity: ${item.quantity}</p>
-            <input type="button" value="+" onclick="changeQuantity(${item.id}, 1)"
-            class="bg-red-500 hover:bg-red-800 text-white font-bold py-1 px-3 ml-2 rounded cursor-pointer"/>
-            <input type="button" value="-" onclick="changeQuantity(${item.id}, -1)"
-            class="bg-red-500 hover:bg-red-800 text-white font-bold py-1 px-3 rounded cursor-pointer"/>
+                <h4 class="text-xl font-semibold ml-1">${item.mealName}</h4>
+                <p class="text-sm text-gray-600 ml-2">$${item.price}.00</p>
+                <p class="text-md ml-1">Quantity: ${item.quantity}</p>
+                <input type="button" value="+" onclick="changeQuantity(${item.id}, 1)"
+                class="bg-red-500 hover:bg-red-800 text-white font-bold py-1 px-3 ml-2 rounded cursor-pointer"/>
+                <input type="button" value="-" onclick="changeQuantity(${item.id}, -1)"
+                class="bg-red-500 hover:bg-red-800 text-white font-bold py-1 px-3 rounded cursor-pointer"/>
             </div>
-            </div>`;
-        });
-        document.getElementById("cartCount").innerHTML = `${cart.reduce((total, item) => total + item.quantity, 0)}`;   // display cart item count in dashboard page
-        displayCartTotal();
+        </div>`;
+    });
+
+    cartItem.innerHTML = `
+        <div class="flex flex-col gap-4 p-4 mt-4 bg-red-200 rounded">
+        <h3 class="text-2xl font-bold">Cart</h3>
+            ${cardsHTML}
+        </div>`;
+
+    document.getElementById("cartCount").innerHTML = `${cart.reduce((total, item) => total + item.quantity, 0)}`;
+    displayCartTotal();
 }
 //change quantity of cart items
 function changeQuantity(id,change){
@@ -130,7 +139,7 @@ function checkout() {
 
         // Checkout screen
         checkoutSelection.innerHTML = `
-            <div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+            <div class="h-fit bg-gray-100 flex justify-center p-4">
                 <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg p-8">
 
                     <!-- Header -->
@@ -143,7 +152,7 @@ function checkout() {
                     </div>
 
                     <!-- Order Summary -->
-                    <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <div class="bg-red-200 rounded-lg p-4 mb-6">
                         <h3 class="text-md font-semibold text-gray-700 mb-3">Order Summary</h3>
                         ${orderSummaryHTML}
                         <div class="border-t border-gray-300 mt-3 pt-3 flex justify-between font-bold text-gray-800">
@@ -179,7 +188,7 @@ function checkout() {
                         <h3 class="text-md font-semibold text-gray-700 mb-3">Payment Information</h3>
                         <div class="mb-4">
                             <label class="block text-sm text-gray-600 mb-1">Card Number</label>
-                            <input type="text" placeholder="...for testing purposes only..." maxlength="19" required
+                            <input type="text" placeholder="...for testing purposes only... 1234 5678 9123 4567" maxlength="19" required
                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
                         </div>
                         <div class="grid grid-cols-3 gap-4 mb-6">

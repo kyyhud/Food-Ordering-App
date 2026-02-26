@@ -9,5 +9,4 @@ function checkInfo(){
         localStorage.setItem("email", email);    //email id set in local storage
         return true;
     }
-
 }
